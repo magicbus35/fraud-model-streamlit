@@ -1,0 +1,59 @@
+{
+  "model_name": "paysim_generic_no_flag_featplus",
+  "description": "XGBoost with feature-plus set, class_weight balancing, no location/account identifiers. Trained on PaySim (step<=600 train, step>600 test).",
+  "file": "models/paysim_generic_no_flag_featplus.joblib",
+  "updated_at": "2025-12-18 16:22",
+  "metrics": {
+    "test_f1_default_threshold": 0.4855,
+    "test_accuracy": 0.9701,
+    "test_f1_best": 0.7980,
+    "best_threshold": 0.972
+  },
+  "data": {
+    "train_rows": 6259047,
+    "train_fraud_rows": 6613,
+    "test_rows": 103573,
+    "test_fraud_rows": 1600,
+    "fraud_ratio_pct": 0.129
+  },
+  "features": {
+    "base_feature_count": 18,
+    "one_hot_expanded_count": 28,
+    "groups": {
+      "time": ["step", "day", "hour", "dow", "hour_sin", "hour_cos"],
+      "amount": [
+        "amount_log",
+        "amount_log_z3",
+        "amount_log_z5",
+        "amount_log_z10",
+        "amount_log_iqr_z",
+        "amount_bin",
+        "amount_rank_pct"
+      ],
+      "type_change": [
+        "type_change_rate2",
+        "type_change_rate3",
+        "type_change_rate5",
+        "type_change_rate10"
+      ],
+      "categorical_one_hot": ["type"]
+    }
+  },
+  "top_feature_importance": [
+    ["type_PAYMENT", 0.434],
+    ["type_CASH_IN", 0.301],
+    ["type_change_rate2", 0.135],
+    ["type_TRANSFER", 0.026],
+    ["type_CASH_OUT", 0.014],
+    ["type_change_rate3", 0.013],
+    ["amount_log_z3", 0.0118],
+    ["amount_log_iqr_z", 0.0099],
+    ["amount_bin_6", 0.0093],
+    ["hour", 0.0067]
+  ],
+  "notes": [
+    "Class imbalance handled with class_weight/scale_pos_weight; no SMOTE.",
+    "Best threshold ~0.972 from PR scan; adjust if higher recall is needed.",
+    "No location/state features; safe for datasets without coordinates."
+  ]
+}
