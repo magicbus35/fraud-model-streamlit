@@ -91,7 +91,10 @@ with pipeline_cols[1]:
     chart = (
         alt.Chart(type_df)
         .mark_bar(cornerRadius=4)
-        .encode(x=alt.X("type:N", title="거래 유형"), y=alt.Y("count:Q", title="건수"))
+        .encode(
+            x=alt.X("type:N", title="거래 유형", axis=alt.Axis(labelAngle=90)),
+            y=alt.Y("count:Q", title="건수", axis=alt.Axis(titleAngle=0)),
+        )
         .properties(height=220)
     )
     st.altair_chart(chart, use_container_width=True)
